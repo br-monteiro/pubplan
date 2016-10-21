@@ -1,0 +1,9 @@
+{
+    "database" : {
+        "sgbd" : "mysql",
+        "host" : "localhost",
+        "dbname" : "pubplan",
+        "username" : "seplan",
+        "password" : "seplan"
+    }
+}

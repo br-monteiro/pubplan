@@ -1,0 +1,19 @@
+{
+    "name":"pubplan",
+    "description":"Biblioteca virtual da SEPLAN-PA",
+    "main": "server.js",
+    "authors": [
+        "Bruno Monteiro - bruno.monteirodg@gmail.com"
+    ],
+    "license": "GNU",
+    "homepage": "#",
+    "private": false,
+    "ignore": [
+        "**/.*",
+        "bower_components"
+    ],
+    "dependencies": {
+        "bootstrap": "~3.3.6",
+        "font-awesome": "~4.6.3"
+    }
+}
