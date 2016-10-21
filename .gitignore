@@ -2,4 +2,5 @@
 *~
 /vendor/
 /public_html/vendor/
+!/public_html/vendor/jqueryForm/
 /App/Cache/*.php
