@@ -65,14 +65,14 @@ class PublicacoesModel extends ModelCRUD
             'select' => ' *,publicacoes.id as id_p, idiomas.nome as nome_idioma, '
             . 'categorias.nome as nome_categoria, '
             . 'tipos.nome as nome_tipos',
-            'entidade' => '`publicacoes` 
-			INNER JOIN idiomas ON idiomas_id=idiomas.id 
-                        INNER JOIN categorias ON categorias_id=categorias.id 
+            'entidade' => '`publicacoes`
+			INNER JOIN idiomas ON idiomas_id=idiomas.id
+                        INNER JOIN categorias ON categorias_id=categorias.id
                         INNER JOIN tipos ON tipos.id=tipos_id',
             'pagina' => $pagina,
             'maxResult' => 20
         ];
-        
+
         // Instacia o Helper que auxilia na paginação de páginas
         $paginator = new Paginator($dados);
         // Resultado da consulta
@@ -97,25 +97,44 @@ class PublicacoesModel extends ModelCRUD
     {
         return $this->navePaginator;
     }
-    
+
     private function upload($dados, $id)
     {
         if (!$dados) {
-            return true;
+            return;
         }
-        
-        if ($dados['imglivro']['type'] != 'images/jpeg') {
-            msg::showMsg('A imagem a ser enviada tem que ser do tipo JPEG. '
+
+        if ($dados['imglivro']['type'] != 'image/jpeg') {
+            msg::showMsg('A imagem de capa deve ser do tipo JPEG. '
                 . '<strong>Extensão *.jpg</strong>.', 'danger');
         }
-        
+
         if ($dados['imglivro']['size'] == 0) {
-            msg::showMsg('Ocorreu um erro ao enviar a imagem. '
+            msg::showMsg('Ocorreu um erro ao enviar a capa do livro.'
                 . 'Verifique se o tamanho da imagem ultrapassa <strong>2MB</strong>.', 'danger');
         }
-        
-        if (!move_uploaded_file($dados['imglivro']['tmp_name'], 'images/' . $id . '.jpg')) {
-            msg::showMsg('Ocorreu um erro ao salvar a imagem. '
+
+        if (!move_uploaded_file($dados['imglivro']['tmp_name'], 'images/uploads/' . $id . '.jpg')) {
+            msg::showMsg('Ocorreu um erro ao salvar a capa do livro'
+                . 'Verifique sua conexão com a internet.', 'danger');
+        }
+
+        if (!isset($dados['arquivo'])) {
+            return;
+        }
+
+        if ($dados['arquivo']['type'] != 'application/pdf') {
+            msg::showMsg('O arquivo de publicação deve ser no formato PDF. '
+                . '<strong>Extensão *.jpg</strong>.', 'danger');
+        }
+
+        if ($dados['arquivo']['size'] == 0) {
+            msg::showMsg('Ocorreu um erro ao enviar o arquivo de puplicação.'
+                . 'Verifique se o tamanho da imagem ultrapassa <strong>10MB</strong>.', 'danger');
+        }
+
+        if (!move_uploaded_file($dados['arquivo']['tmp_name'], 'files_uploads/' . $id . '.pdf')) {
+            msg::showMsg('Ocorreu um erro ao salvar o arquivo de publicação.'
                 . 'Verifique sua conexão com a internet.', 'danger');
         }
     }
@@ -127,9 +146,7 @@ class PublicacoesModel extends ModelCRUD
     {
         $token = new Security();
         $token->checkToken();
-        
-        $id = $this->getId();
-        $this->upload($_FILES, $id);
+
         // Valida dados
         $this->validateAll();
         // Verifica se há registro igual e evita a duplicação
@@ -150,7 +167,8 @@ class PublicacoesModel extends ModelCRUD
         ];
 
         if ($this->insert($dados)) {
-            msg::showMsg('111', 'success');
+            msg::showMsg('111', 'success', false);
+            $this->upload($_FILES, $this->pdo->lastInsertId());
         }
     }
 
@@ -161,9 +179,7 @@ class PublicacoesModel extends ModelCRUD
     {
         $token = new Security();
         $token->checkToken();
-        
-        $id = $this->getId();
-        $this->upload($_FILES, $id);
+
         // Valida dados
         $this->validateAll();
         // Verifica se há registro igual e evita a duplicação
@@ -183,8 +199,10 @@ class PublicacoesModel extends ModelCRUD
           'tipos_id' => $this->getTiposId(),
         ];
 
+        $this->upload($_FILES, $this->getId());
+
         if ($this->update($dados, $this->getId())) {
-            msg::showMsg('001', 'success');
+            msg::showMsg('001', 'success', false);
         }
     }
 
@@ -245,7 +263,7 @@ class PublicacoesModel extends ModelCRUD
                 . '<strong>Editora</strong>.'
                 . '<script>focusOn("editora")</script>', 'warning');
         }
-        
+
         // Não deixa duplicar os valores do campo isbn
         $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
                 ->setFields(['id'])
@@ -274,7 +292,7 @@ class PublicacoesModel extends ModelCRUD
                 . '<strong>Sinopse</strong>.'
                 . '<script>focusOn("sinopse")</script>', 'warning');
         }
-        
+
     }
 
     /*

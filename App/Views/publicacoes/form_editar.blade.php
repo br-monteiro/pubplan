@@ -180,8 +180,29 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label>Imagem do Livro</label>
+                                    <label>Imagem de Capa</label>
                                     <input type="file" name="imglivro" class="form-control">
+                                </div>
+                                
+                                <div class="form-group set-arquivo">
+                                    <label>Opções de publicação</label>
+                                    <input type="radio" name="change_publicacao" value="pdf" class="change_publicacao" checked=""> PDF |
+                                    <input type="radio" name="change_publicacao" value="link" class="change_publicacao"> Link
+                                </div>
+
+                                <div class="form-group set-arquivo">
+                                    <label>Arquivo para publicação</label>
+                                    <input type="file" name="arquivo" class="form-control">
+                                </div>
+                                
+                                <div class="form-group set-link" style="display: none">
+                                    <label>Link de arquivo externo</label>
+                                    <input type="url"
+                                           id="link"
+                                           name="link"
+                                           placeholder="URL do arquivo externo"
+                                           class="form-control"
+                                           value="{{$result['link']}}">
                                 </div>
 
                                 <div class="form-group">

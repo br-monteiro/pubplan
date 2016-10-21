@@ -163,8 +163,13 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label>Imagem do Livro</label>
+                                    <label>Imagem de Capa</label>
                                     <input type="file" name="imglivro" class="form-control">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Arquivo para publicação</label>
+                                    <input type="file" name="arquivo" class="form-control">
                                 </div>
 
                                 <div class="form-group">
