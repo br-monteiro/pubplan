@@ -1,6 +1,7 @@
 /nbproject/
 *~
 /vendor/
-/public_html/vendor/
-!/public_html/vendor/jqueryForm/
+/public_html/vendor/bootstrap/
+/public_html/vendor/font-awesome/
+/public_html/vendor/jquery/
 /App/Cache/*.php
