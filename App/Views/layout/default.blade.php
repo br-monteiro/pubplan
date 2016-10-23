@@ -10,8 +10,6 @@
         <meta name="author" content="Bruno Monteiro">
 
         <title>@yield('title') :: {{APPNAM}} {{APPVER}} ::</title>
-        <!-- jQuery -->
-        <script src="{{ATTACH}}jquery/dist/jquery.min.js"></script>
 
         @include('layout.Common.styles')
 
@@ -40,7 +38,6 @@
         <!-- /#wrapper -->
 
         @include('layout.Common.scripts')
-
 
     </body>
 

@@ -1,3 +1,6 @@
+<!-- jQuery -->
+<script src="{{ATTACH}}jquery/dist/jquery.min.js"></script>
+
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ATTACH}}bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -36,18 +39,6 @@ function confirmar(texto, url) {
 
 (function () {
     var status = $(".resultado");
-    
-    $('.change_publicacao').click(function() {
-        if ($(this).val() == 'pdf') {
-            $('.set-link').css("display", 'none');
-            $('.set-arquivo').css("display", 'inline');
-        }
-
-        if ($(this).val() == 'link') {
-            $('.set-link').css("display", 'inline');
-            $('.set-arquivo').css("display", 'none');
-        }
-    });
 
     $('#form').ajaxForm({
         beforeSend: function () {
@@ -68,6 +59,8 @@ function confirmar(texto, url) {
             status.html(xhr.responseText);
         }
     });
+    
+    @yield('scripts')
 
 })();
 
