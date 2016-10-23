@@ -104,6 +104,23 @@ trait PublicacoesValidatorTrait
         }
     }
 
+    protected function validateLink($id)
+    {
+        if (file_exists('files_uploads/' . $id . '.pdf') && !$this->getLink()) {
+            return true;
+        }
+
+        $value = v::url()->notEmpty()->validate($this->getLink());
+        if (!$value) {
+            msg::showMsg('É necessário fornecer uma URL válida para o campo <strong>Link</stron>.'
+                . '<script>focusOn("link");</script>', 'danger', false);
+            
+            return false;
+        }
+
+        return true;
+    }
+
     protected function validateIdiomasId()
     {
         $value = v::intVal()->notEmpty()->length(1, 11)->validate($this->getIdiomasId());
