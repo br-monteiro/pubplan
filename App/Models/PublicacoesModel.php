@@ -29,9 +29,11 @@ class PublicacoesModel extends ModelCRUD
     protected $sinopse;
     protected $palavrasChave;
     protected $numeroPagias;
+    protected $link;
     protected $idiomasId;
     protected $categoriasId;
     protected $tiposId;
+    protected $rankingsId;
 
     private $resultadoPaginator;
     private $navePaginator;
@@ -53,6 +55,33 @@ class PublicacoesModel extends ModelCRUD
          * Método padrão do sistema usado para retornar todos os dados da tabela
          */
         return $this->findAll();
+    }
+
+    /**
+     * :: REESCRITA DO MÉTODO MÁGICO | IMPLEMENTAÇÃO DISPONÍVEL APENAS PARA PublicacoesModel ::
+     * Consulta o registro de publicação por ID
+     * @param int $id Id da publicação a ser consultatada
+     */
+    public function findById($id)
+    {
+        /**
+         * Instancia o model de relacionamento com autores
+         */
+        $autoresByPublicacoes = new PublicacoesAutoresModel($this->pdo);
+        /**
+         * consulta todos os autores da publicação identificada com este ID
+         */
+        $autores = $autoresByPublicacoes->returnAllByPublicacao($id);
+        /**
+         * Consulta os dados da publicação
+         */
+        $value = parent::findById($id);
+        /**
+         * Agrega aos dados da publicação os dados dos autores
+         */
+        $value['autores'] = $autores;
+
+        return $value;
     }
 
     public function paginator($pagina)
@@ -102,6 +131,14 @@ class PublicacoesModel extends ModelCRUD
     {
         if (!$dados) {
             return;
+        }
+
+        if (file_exists('imagem/upload/' . $id . '.jpg')) {
+            return;
+        }
+
+        if (empty($dados['imglivro'])) {
+            msg::showMsg('É necessário fornecer uma <strong>imagem de capa</strong> para publicação.', 'danger');
         }
 
         if ($dados['imglivro']['type'] != 'image/jpeg') {
@@ -161,14 +198,24 @@ class PublicacoesModel extends ModelCRUD
           'sinopse' => $this->getSinopse(),
           'palavras_chave' => $this->getPalavrasChave(),
           'numero_pagias' => $this->getNumeroPagias(),
+          'link' => $this->getLink(),
           'idiomas_id' => $this->getIdiomasId(),
           'categorias_id' => $this->getCategoriasId(),
           'tipos_id' => $this->getTiposId(),
         ];
 
         if ($this->insert($dados)) {
-            msg::showMsg('111', 'success', false);
-            $this->upload($_FILES, $this->pdo->lastInsertId());
+
+            $id = $this->pdo->lastInsertId();
+
+            $this->upload($_FILES, $id);
+
+            if (!$this->validateLink($id)) {
+                $this->delete($id);
+                return;
+            }
+
+            msg::showMsg('111', 'success');
         }
     }
 
@@ -182,6 +229,10 @@ class PublicacoesModel extends ModelCRUD
 
         // Valida dados
         $this->validateAll();
+        // valida o link
+        if(!$this->validateLink($this->getId())) {
+            return;
+        }
         // Verifica se há registro igual e evita a duplicação
         $this->notDuplicate();
 
@@ -194,6 +245,7 @@ class PublicacoesModel extends ModelCRUD
           'sinopse' => $this->getSinopse(),
           'palavras_chave' => $this->getPalavrasChave(),
           'numero_pagias' => $this->getNumeroPagias(),
+          'link' => $this->getLink(),
           'idiomas_id' => $this->getIdiomasId(),
           'categorias_id' => $this->getCategoriasId(),
           'tipos_id' => $this->getTiposId(),
@@ -202,7 +254,7 @@ class PublicacoesModel extends ModelCRUD
         $this->upload($_FILES, $this->getId());
 
         if ($this->update($dados, $this->getId())) {
-            msg::showMsg('001', 'success', false);
+            msg::showMsg('001', 'success');
         }
     }
 
@@ -310,6 +362,7 @@ class PublicacoesModel extends ModelCRUD
         $this->setSinopse(filter_input(INPUT_POST, 'sinopse'));
         $this->setPalavrasChave(filter_input(INPUT_POST, 'palavras_chave'));
         $this->setNumeroPagias(filter_input(INPUT_POST, 'numero_pagias'));
+        $this->setLink(filter_input(INPUT_POST, 'link'));
         $this->setIdiomasId(filter_input(INPUT_POST, 'idiomas_id'));
         $this->setCategoriasId(filter_input(INPUT_POST, 'categorias_id'));
         $this->setTiposId(filter_input(INPUT_POST, 'tipos_id'));
