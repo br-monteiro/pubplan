@@ -43,7 +43,7 @@ class AutoresModel extends ModelCRUD
         /**
          * Método padrão do sistema usado para retornar todos os dados da tabela
          */
-        return $this->findAll();
+        return $this->findAll('nome ASC');
     }
 
     public function paginator($pagina)
