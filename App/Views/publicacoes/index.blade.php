@@ -50,7 +50,7 @@
                             <td>{{$value['nome_tipos']}}</td>
                             <td>
                                 <a href="{{$controller}}editar/id/{{$value['id_p']}}" class="btn btn-success">
-                                    <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="Editar"></i> 
+                                    <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i> 
                                 </a>
                                 <a href="#"
                                    onclick="confirmar('Deseja REMOVER este registro?', '{{$controller}}eliminar/id/{{$value['id_p']}}')"
