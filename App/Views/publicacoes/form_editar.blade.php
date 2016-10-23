@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4 class="page-header">Formulário de edição de Publicacoes</h4>
-                
+
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -90,7 +90,7 @@
                                            maxlength="45"
                                            >
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Sinopse</label>
                                     <textarea id="sinopse"
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Idiomas</label>
-                                    <select 
+                                    <select
                                            id="idiomas_id"
                                            name="idiomas_id"
                                            class="form-control"
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Categorias</label>
-                                    <select 
+                                    <select
                                            id="categorias_id"
                                            name="categorias_id"
                                            class="form-control"
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Tipo Publicação</label>
-                                    <select 
+                                    <select
                                            id="tipos_id"
                                            name="tipos_id"
                                            class="form-control"
@@ -178,13 +178,13 @@
                                            @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Imagem de Capa</label>
                                     <input type="file" name="imglivro" class="form-control">
                                 </div>
-                                
-                                <div class="form-group set-arquivo">
+
+                                <div class="form-group">
                                     <label>Opções de publicação</label>
                                     <input type="radio" name="change_publicacao" value="pdf" class="change_publicacao" checked=""> PDF |
                                     <input type="radio" name="change_publicacao" value="link" class="change_publicacao"> Link
@@ -194,7 +194,7 @@
                                     <label>Arquivo para publicação</label>
                                     <input type="file" name="arquivo" class="form-control">
                                 </div>
-                                
+
                                 <div class="form-group set-link" style="display: none">
                                     <label>Link de arquivo externo</label>
                                     <input type="url"
@@ -224,4 +224,23 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+@endsection
+
+@section('scripts')
+
+    $('.change_publicacao').click(function() {
+
+        var value = $(this).val();
+
+        if (value == 'pdf') {
+            $('.set-link').hide();
+            $('.set-arquivo').show();
+        }
+
+        if (value == 'link') {
+            $('.set-link').show();
+            $('.set-arquivo').hide();
+        }
+    });
+
 @endsection
