@@ -5,3 +5,4 @@
 /public_html/vendor/font-awesome/
 /public_html/vendor/jquery/
 /App/Cache/*.php
+/composer.lock
