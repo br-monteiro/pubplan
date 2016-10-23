@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="page-header">Formulário de edição de Publicacoes</h4>
+                <h4 class="page-header">Formulário de edição de Publicações</h4>
 
             </div>
             <!-- /.col-lg-12 -->
