@@ -19,7 +19,7 @@
 <script type="text/javascript">
 function resetForm() {
     document.getElementById("form").reset();
-    setInterval("clearMsg()", 2000);
+    setInterval("clearMsg()", 8000);
 }
 
 function clearMsg() {
