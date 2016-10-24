@@ -112,7 +112,7 @@ trait PublicacoesValidatorTrait
 
         $value = v::url()->notEmpty()->validate($this->getLink());
         if (!$value) {
-            msg::showMsg('É necessário fornecer uma URL válida para o campo <strong>Link</stron>.'
+            msg::showMsg('É necessário fornecer uma URL válida para o campo <strong>Link</strong>.'
                 . '<script>focusOn("link");</script>', 'danger', false);
             
             return false;

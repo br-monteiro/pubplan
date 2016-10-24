@@ -11,6 +11,7 @@ use HTR\System\ModelCRUD;
 use HTR\Helpers\Mensagem\Mensagem as msg;
 use HTR\Helpers\Paginator\Paginator;
 use HTR\System\Security;
+use App\Models\PublicacoesAutoresModel;
 
 class PublicacoesModel extends ModelCRUD
 {
@@ -34,6 +35,7 @@ class PublicacoesModel extends ModelCRUD
     protected $categoriasId;
     protected $tiposId;
     protected $rankingsId;
+    protected $autores;
 
     private $resultadoPaginator;
     private $navePaginator;
@@ -72,6 +74,11 @@ class PublicacoesModel extends ModelCRUD
          * consulta todos os autores da publicação identificada com este ID
          */
         $autores = $autoresByPublicacoes->returnAllByPublicacao($id);
+        $val = [];
+        foreach ($autores as $value) {
+            $val[] = $value['id'];
+        }
+
         /**
          * Consulta os dados da publicação
          */
@@ -79,7 +86,7 @@ class PublicacoesModel extends ModelCRUD
         /**
          * Agrega aos dados da publicação os dados dos autores
          */
-        $value['autores'] = $autores;
+        $value['autores'] = $val;
 
         return $value;
     }
@@ -92,12 +99,12 @@ class PublicacoesModel extends ModelCRUD
         $dados = [
             'pdo' => $this->pdo,
             'select' => ' *,publicacoes.id as id_p, idiomas.nome as nome_idioma, '
-            . 'categorias.nome as nome_categoria, '
-            . 'tipos.nome as nome_tipos',
+                . 'categorias.nome as nome_categoria, '
+                . 'tipos.nome as nome_tipos',
             'entidade' => '`publicacoes`
-			INNER JOIN idiomas ON idiomas_id=idiomas.id
-                        INNER JOIN categorias ON categorias_id=categorias.id
-                        INNER JOIN tipos ON tipos.id=tipos_id',
+                INNER JOIN idiomas ON idiomas_id=idiomas.id
+                INNER JOIN categorias ON categorias_id=categorias.id
+                INNER JOIN tipos ON tipos.id=tipos_id',
             'pagina' => $pagina,
             'maxResult' => 20
         ];
@@ -183,6 +190,8 @@ class PublicacoesModel extends ModelCRUD
     {
         $token = new Security();
         $token->checkToken();
+        
+        $pubAuts = new PublicacoesAutoresModel($this->pdo);
 
         // Valida dados
         $this->validateAll();
@@ -204,13 +213,16 @@ class PublicacoesModel extends ModelCRUD
           'tipos_id' => $this->getTiposId(),
         ];
 
-        if ($this->insert($dados)) {
+       if ($this->insert($dados)) {
 
             $id = $this->pdo->lastInsertId();
 
             $this->upload($_FILES, $id);
 
+            $pubAuts->novo($this->getAutores(), $id);
+
             if (!$this->validateLink($id)) {
+                $pubAuts->remove($this->getAutores(), $this->pdo->lastInsertId());
                 $this->delete($id);
                 return;
             }
@@ -366,6 +378,7 @@ class PublicacoesModel extends ModelCRUD
         $this->setIdiomasId(filter_input(INPUT_POST, 'idiomas_id'));
         $this->setCategoriasId(filter_input(INPUT_POST, 'categorias_id'));
         $this->setTiposId(filter_input(INPUT_POST, 'tipos_id'));
+        $this->setAutores(filter_input_array(INPUT_POST)['autores']);
 
         // Inicia a Validação dos dados
         $this->validateId();
