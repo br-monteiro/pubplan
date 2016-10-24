@@ -56,6 +56,9 @@ class PublicacoesController extends Controller implements ControllerInterface
         // relação com model TiposModel
         $tiposModel = new \App\Models\TiposModel($this->access->pdo);
         $this->view['resultTipos'] = $tiposModel->returnAll();
+        // relação com model AutoresModel
+        $autoresModel = new \App\Models\AutoresModel($this->access->pdo);
+        $this->view['resultAutores'] = $autoresModel->returnAll();
 
         $this->render('publicacoes.form_novo');
     }
@@ -77,6 +80,9 @@ class PublicacoesController extends Controller implements ControllerInterface
         // relação com model TiposModel
         $tiposModel = new \App\Models\TiposModel($this->access->pdo);
         $this->view['resultTipos'] = $tiposModel->returnAll();
+        // relação com model AutoresModel
+        $autoresModel = new \App\Models\AutoresModel($this->access->pdo);
+        $this->view['resultAutores'] = $autoresModel->returnAll();
 
         $this->view['result'] = $model->findById($this->getParam('id'));
         $this->render('publicacoes.form_editar');
