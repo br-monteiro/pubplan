@@ -45,6 +45,20 @@
                                            required>
                                 </div>
                                 <div class="form-group">
+                                    <label>Autor</label>
+                                    <select multiple=""
+                                            id="autores"
+                                            name="autores"
+                                            class="form-control"
+                                            required>
+                                        @forelse ($resultAutores as $autor)
+                                        <option value="{{$autor['id']}}">{{$autor['nome']}}</option>
+                                        @empty
+                                        <option value="">Nenhum Autor Cadastrado</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label>Ano</label>
                                     <input type="text"
                                            id="ano"

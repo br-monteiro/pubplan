@@ -55,7 +55,7 @@
                                 <a href="#"
                                    onclick="confirmar('Deseja REMOVER este registro?', '{{$controller}}eliminar/id/{{$value['id_p']}}')"
                                    class="btn btn-danger">
-                                    <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="Eliminar"></i> 
+                                    <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i> 
                                 </a>
                             </td>
                         </tr>
