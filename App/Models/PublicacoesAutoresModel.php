@@ -77,7 +77,18 @@ class PublicacoesAutoresModel extends ModelCRUD
 
         return true;
     }
-    
+
+    public function updateListOfAuthors($dadosAutores, $publicacaoId)
+    {
+        $this->db->instruction(new Delete($this->entidade))
+            ->setFilters()
+            ->where('publicacoes_id', '=', $publicacaoId);
+
+        $this->db->execute();
+
+        $this->novo($dadosAutores, $publicacaoId);
+    }
+
     public function remove($autorId, $publicacaoId)
     {
         $this->db->instruction(new Delete($this->entidade))

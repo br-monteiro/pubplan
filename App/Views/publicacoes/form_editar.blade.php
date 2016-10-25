@@ -50,7 +50,7 @@
                                     <label>Autor</label>
                                     <select multiple=""
                                             id="autores"
-                                            name="autores"
+                                            name="autores[]"
                                             class="form-control"
                                             required>
                                         @forelse ($resultAutores as $autor)
