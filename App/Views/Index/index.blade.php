@@ -29,10 +29,10 @@
 
             <!--Meu Carousel-->
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                
+
                 <div class="carousel-inner" role="listbox">
                     <?php
-                        $i = false; 
+                        $i = false;
                         $active = 'active';
                         $firstSlide = 'first-slide';
                     ?>
@@ -41,7 +41,7 @@
                         <img class="{{$firstSlide}}" src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}">
                         <div class="container">
                             <div class="carousel-caption">
-                                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver mais</a></p>
+                                <p><a class="btn btn-lg btn-primary" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver mais</a></p>
                             </div>
                         </div>
                     </div>
@@ -72,22 +72,14 @@
                     </div>
                     <div class="caption">
                         <h3>{{$value['titulo']}}</h3>
-                        <p><a class="btn btn-default" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
+                        <p><a class="btn btn-success" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
                     </div>
                 </div>
                 @endforeach
             </div>
 
         </div><!--/.col-xs-12.col-sm-9-->
-
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Categorias</a>
-                @foreach ($resultCategorias as $value)
-                <a href="#" class="list-group-item">{{$value['nome']}}</a>
-                @endforeach
-            </div>
-        </div><!--/.sidebar-offcanvas-->
+        @include('Index.lista_categorias')
     </div><!--/row-->
 
     <hr>

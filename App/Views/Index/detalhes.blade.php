@@ -32,7 +32,17 @@
             </div>
             <div class="row">
                 <div class="col-xs-6 col-md-4 text-center">
-                    <img class="thumbnail" src="{{APPDIR}}images/uploads/{{$resultPublicacao['id']}}.jpg" alt="" width="235" height="300">                  
+                    <div class="thumbnail">
+                        <img src="{{APPDIR}}images/uploads/{{$resultPublicacao['id']}}.jpg" alt="" width="235" height="300">
+                        <div class="btn-group" style="margin-top: 10px;" role="group" aria-label="selecione...">
+                            <a href="{{APPDIR}}" class="btn btn-primary">
+                                <i class="fa fa-mail-reply"></i> Retornar
+                            </a>
+                            <a href="{{$resultPublicacao['link'] or APPDIR . 'files_uploads/' . $resultPublicacao['id'] . '.pdf'}}" class="btn btn-warning">
+                                <i class="fa fa-book"></i> Ler Publicação
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-6 col-md-6 ">
                     <label>Ano</label>
@@ -53,18 +63,9 @@
             <p class="text-justify">
                 {{$resultPublicacao['sinopse']}}
             </p>
-
-            <a class="btn btn-success" href="{{APPDIR}}" role="button">Voltar</a>
         </div><!--/.col-xs-12.col-sm-9-->
-        
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Categorias</a>
-                @foreach ($resultCategorias as $value)
-                <a href="#" class="list-group-item">{{$value['nome']}}</a>
-                @endforeach
-            </div>
-        </div><!--/.sidebar-offcanvas-->
+
+        @include('Index.lista_categorias')
 
     </div><!--/row-->
 

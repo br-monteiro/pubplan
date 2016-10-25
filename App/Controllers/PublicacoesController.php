@@ -113,6 +113,7 @@ class PublicacoesController extends Controller implements ControllerInterface
 
         $this->render('publicacoes.index');
     }
+    
 
     /**
      * Action responsável controlar a inserção de registros
