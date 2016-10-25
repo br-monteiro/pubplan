@@ -2,9 +2,7 @@
 <link href="{{ATTACH}}bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap Core CSS -->
-<link href="{{ATTACH}}bootstrap/dist/css/offcanvas.css" rel="stylesheet">
-
-<link href="{{ATTACH}}bootstrap/dist/css/carousel.css" rel="stylesheet">
+<link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
 <link href="{{ATTACH}}metisMenu/dist/metisMenu.min.css" rel="stylesheet">
