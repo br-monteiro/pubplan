@@ -35,4 +35,13 @@ class IndexController extends Controller implements CtrlInterface
         // Renderiza a view index.phtml com o layout blank
         $this->render('Index.index');
     }
+    
+    public function DetalhesAction()
+    {
+        $publicacoes = new Publicacoes();
+        $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
+        
+        // Renderiza a view detalhes.phtml com o layout blank
+        $this->render('Index.detalhes');
+    }
 }

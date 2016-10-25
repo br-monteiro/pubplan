@@ -4,6 +4,8 @@
 <!-- Bootstrap Core CSS -->
 <link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
 
+<link href="{{DIRCSS}}carousel.css" rel="stylesheet">
+
 <!-- MetisMenu CSS -->
 <link href="{{ATTACH}}metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 

@@ -29,37 +29,30 @@
 
             <!--Meu Carousel-->
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
+                
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img class="first-slide" src="images/Diário de Anne Frank.jpg" alt="1º Livro" width="150" height="200">
+                    <?php
+                        $i = false; 
+                        $active = 'active';
+                        $firstSlide = 'first-slide';
+                    ?>
+                    @foreach ($resultPublicacoes as $value)
+                    <div class="item {{$active}}">
+                        <img class="{{$firstSlide}}" src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}">
                         <div class="container">
                             <div class="carousel-caption">
                                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver mais</a></p>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <img class="second-slide" src="images/Da Sabedoria Clássica à Popular.jpg" alt="2º Livro" width="150" height="200">
-                        <div class="container">
-                            <div class="carousel-caption">
-                                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver mais</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img class="third-slide" src="images/Cônicas e Quádricas.jpg" alt="3º Livro" width="150" height="200">
-                        <div class="container">
-                            <div class="carousel-caption">
-                                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver mais</a></p>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        if (!$i) {
+                            $i = true;
+                            $active = null;
+                            $firstSlide = null;
+                        }
+                    ?>
+                    @endforeach
                 </div>
                 <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                     <span class="fa fa-arrow-circle-o-left" aria-hidden="true"></span>
@@ -75,12 +68,11 @@
                 @foreach ($resultPublicacoes as $value)
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="images/{{$value['titulo']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
+                        <img src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                     </div>
                     <div class="caption">
                         <h3>{{$value['titulo']}}</h3>
-                        <p>{{$value['sinopse']}}</p>
-                        <p><a class="btn btn-default" href="#" role="button">Ver Detalhes &raquo;</a></p>
+                        <p><a class="btn btn-default" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
                     </div>
                 </div>
                 @endforeach
