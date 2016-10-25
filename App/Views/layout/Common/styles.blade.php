@@ -1,11 +1,6 @@
 <!-- Bootstrap Core CSS -->
 <link href="{{ATTACH}}bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap Core CSS -->
-<link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
-
-<link href="{{DIRCSS}}carousel.css" rel="stylesheet">
-
 <!-- MetisMenu CSS -->
 <link href="{{ATTACH}}metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
@@ -21,3 +16,5 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+@yield('styles')
