@@ -90,3 +90,10 @@
 
 </div><!--/.container-->
 @endsection
+
+@section('styles')
+    <!-- Bootstrap Core CSS -->
+    <link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
+
+    <link href="{{DIRCSS}}carousel.css" rel="stylesheet">
+@endsection
