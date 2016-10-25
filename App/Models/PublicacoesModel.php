@@ -190,7 +190,7 @@ class PublicacoesModel extends ModelCRUD
     {
         $token = new Security();
         $token->checkToken();
-        
+
         $pubAuts = new PublicacoesAutoresModel($this->pdo);
 
         // Valida dados
@@ -262,6 +262,9 @@ class PublicacoesModel extends ModelCRUD
           'categorias_id' => $this->getCategoriasId(),
           'tipos_id' => $this->getTiposId(),
         ];
+
+        $pubAuts = new PublicacoesAutoresModel($this->pdo);
+        $pubAuts->updateListOfAuthors($this->getAutores(), $this->getId());
 
         $this->upload($_FILES, $this->getId());
 
