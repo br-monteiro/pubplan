@@ -75,11 +75,10 @@
                 @foreach ($resultPublicacoes as $value)
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="images/{{$value['titulo']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
+                        <img src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                     </div>
                     <div class="caption">
                         <h3>{{$value['titulo']}}</h3>
-                        <p>{{$value['sinopse']}}</p>
                         <p><a class="btn btn-default" href="#" role="button">Ver Detalhes &raquo;</a></p>
                     </div>
                 </div>
