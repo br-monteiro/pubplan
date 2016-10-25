@@ -282,6 +282,10 @@ class PublicacoesModel extends ModelCRUD
             header('Location: ' . APPDIR . 'publicacoes/visualizar/');
         }
     }
+    
+    public function filtroCategoria($id){
+        
+    }
 
     /**
      * Evita a duplicidade de registros no sistema
