@@ -40,7 +40,8 @@ class IndexController extends Controller implements CtrlInterface
     {
         $publicacoes = new Publicacoes();
         $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
-        
+        $categorias = new Categoria();
+        $this->view['resultCategorias'] = $categorias->returnAll();
         // Renderiza a view detalhes.phtml com o layout blank
         $this->render('Index.detalhes');
     }
