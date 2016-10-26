@@ -12,6 +12,7 @@ use HTR\Interfaces\ControllerInterface;
 use HTR\Helpers\Access\Access;
 use App\Models\PublicacoesModel;
 use App\Models\RankingsModel;
+use App\Models\CategoriasModel;
 
 class PublicacoesController extends Controller implements ControllerInterface
 {
@@ -140,7 +141,10 @@ class PublicacoesController extends Controller implements ControllerInterface
     {
         $rankingModel = new RankingsModel($this->access->pdo);
         if (!$rankingModel->novo($this->getParam('id'))) {
-            $this->render('');
+            
+            $categorias = new CategoriasModel($this->access->pdo);
+            $this->view['resultCategorias'] = $categorias->returnAll();
+            $this->render('Index.publicacao_nao_existe');
         }
     }
 }
