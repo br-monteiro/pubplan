@@ -294,7 +294,8 @@ class PublicacoesModel extends ModelCRUD
             ->setFilters()
             ->where("timestamp", 'BETWEEN', strtotime('today'))
             ->whereOperator("AND")
-            ->where("", "" , strtotime('+1 month'));
+            ->where("", "" , strtotime('+1 month'))
+            ->groupBy('publicacoes.titulo');
         return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
     
@@ -337,21 +338,6 @@ class PublicacoesModel extends ModelCRUD
             msg::showMsg('Já existe um registro com este(s) caractere(s) no campo '
                 . '<strong>Título da Obra</strong>.'
                 . '<script>focusOn("titulo")</script>', 'warning');
-        }
-        
-        // Não deixa duplicar os valores do campo editora
-        $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
-                ->setFields(['id'])
-                ->setFilters()
-                ->where('id', '!=', $this->getId())
-                ->whereOperator('AND')
-                ->where('editora', '=' , $this->getEditora());
-        $result = $this->db->execute()->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result) {
-            msg::showMsg('Já existe um registro com este(s) caractere(s) no campo '
-                . '<strong>Editora</strong>.'
-                . '<script>focusOn("editora")</script>', 'warning');
         }
 
         // Não deixa duplicar os valores do campo isbn

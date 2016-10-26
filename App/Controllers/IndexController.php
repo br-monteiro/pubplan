@@ -28,10 +28,10 @@ class IndexController extends Controller implements CtrlInterface
      */
     public function indexAction()
     {
-        $publicacoes = new Publicacoes();
+        $publicacoes = new Publicacoes($this->access->pdo);
         $this->view['resultPublicacoes'] = $publicacoes->publicacoesLimit();
         $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
-        $categorias = new Categoria();
+        $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
         // Renderiza a view index.phtml com o layout blank
         $this->render('Index.index');
@@ -39,18 +39,19 @@ class IndexController extends Controller implements CtrlInterface
     
     public function DetalhesAction()
     {
-        $publicacoes = new Publicacoes();
+        $publicacoes = new Publicacoes($this->access->pdo);
         $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
-        $categorias = new Categoria();
+        $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
         // Renderiza a view detalhes.phtml com o layout blank
         $this->render('Index.detalhes');
     }
     
     public function filtroCategoriaAction(){
-        $publicacoes = new Publicacoes();
+        $publicacoes = new Publicacoes($this->access->pdo);
         $this->view['PublicacoesPorCategoria'] = $publicacoes->filtroCategoria($this->getParam('id'));
-        $categorias = new Categoria();
+        $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
+        $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
         
         $this->render('Index.filtro_categorias');

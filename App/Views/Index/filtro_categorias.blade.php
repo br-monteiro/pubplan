@@ -21,7 +21,7 @@
                         $active = 'active';
                         $firstSlide = 'first-slide';
                     ?>
-                    @foreach ($resultPublicacoes as $value)
+                    @foreach ($resultCarousel as $value)
                     <div class="item {{$active}}">
                         <img class="{{$firstSlide}}" src="{{APPDIR}}images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}">
                         <div class="container">
