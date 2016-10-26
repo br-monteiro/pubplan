@@ -17,9 +17,9 @@
 
                 <div class="carousel-inner" role="listbox">
                     <?php
-                        $i = false;
-                        $active = 'active';
-                        $firstSlide = 'first-slide';
+                    $i = false;
+                    $active = 'active';
+                    $firstSlide = 'first-slide';
                     ?>
                     @foreach ($resultCarousel as $value)
                     <div class="item {{$active}}">
@@ -31,11 +31,11 @@
                         </div>
                     </div>
                     <?php
-                        if (!$i) {
-                            $i = true;
-                            $active = null;
-                            $firstSlide = null;
-                        }
+                    if (!$i) {
+                        $i = true;
+                        $active = null;
+                        $firstSlide = null;
+                    }
                     ?>
                     @endforeach
                 </div>
@@ -49,19 +49,45 @@
                 </a>
             </div><!-- /.carousel -->
 
-            <div class="row">
-                @foreach ($resultPublicacoes as $value)
-                <div class="col-sm-6 col-md-4">
+            <?php
+            $i = 0;
+            $qtdPublicacaoes = 0;
+            $contador = 0;
+            $qtdPublicacaoes = count($resultPublicacoes);
+
+            foreach ($resultPublicacoes as $value):
+
+                //$modPulicacacoes = $qtdPublicacaoes % 4;
+                ++$contador;
+
+                if ($i == 0) {
+                    echo "<div class=\"row\">";
+                }
+                $i++;
+                ?>
+                <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
+                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}">
+                            <img src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
+                        </a>
                     </div>
                     <div class="caption">
-                        <h3>{{$value['titulo']}}</h3>
-                        <p><a class="btn btn-success" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
+                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}">
+                            <h4>{{$value['titulo']}}</h4>
+                        </a>
                     </div>
                 </div>
-                @endforeach
-            </div>
+                <?php
+                if ($contador == $qtdPublicacaoes) {
+                    echo "</div>";
+                    break;
+                }
+                if ($i == 4) {
+                    echo "</div>";
+                    $i = 0;
+                }
+            endforeach;
+            ?>
 
         </div><!--/.col-xs-12.col-sm-9-->
         @include('Index.lista_categorias')
@@ -77,8 +103,8 @@
 @endsection
 
 @section('styles')
-    <!-- Bootstrap Core CSS -->
-    <link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="{{DIRCSS}}offcanvas.css" rel="stylesheet">
 
-    <link href="{{DIRCSS}}carousel.css" rel="stylesheet">
+<link href="{{DIRCSS}}carousel.css" rel="stylesheet">
 @endsection
