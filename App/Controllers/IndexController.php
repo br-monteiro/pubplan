@@ -52,6 +52,6 @@ class IndexController extends Controller implements CtrlInterface
         $categorias = new Categoria();
         $this->view['resultCategorias'] = $categorias->returnAll();
         
-        $this->render('Index.index');
+        $this->render('Index.filtro_categorias');
     }
 }
