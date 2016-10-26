@@ -23,7 +23,7 @@
                     ?>
                     @foreach ($resultCarousel as $value)
                     <div class="item {{$active}}">
-                        <img class="{{$firstSlide}}" src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}">
+                        <img class="{{$firstSlide}}" src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                         <div class="container">
                             <div class="carousel-caption">
                                 <p><a class="btn btn-lg btn-primary" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver mais</a></p>
