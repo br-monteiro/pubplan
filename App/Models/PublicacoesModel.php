@@ -337,20 +337,7 @@ class PublicacoesModel extends ModelCRUD
                 . '<strong>Título da Obra</strong>.'
                 . '<script>focusOn("titulo")</script>', 'warning');
         }
-        // Não deixa duplicar os valores do campo ano
-        $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
-                ->setFields(['id'])
-                ->setFilters()
-                ->where('id', '!=', $this->getId())
-                ->whereOperator('AND')
-                ->where('ano', '=' , $this->getAno());
-        $result = $this->db->execute()->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result) {
-            msg::showMsg('Já existe um registro com este(s) caractere(s) no campo '
-                . '<strong>Ano</strong>.'
-                . '<script>focusOn("ano")</script>', 'warning');
-        }
+        
         // Não deixa duplicar os valores do campo editora
         $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
                 ->setFields(['id'])
