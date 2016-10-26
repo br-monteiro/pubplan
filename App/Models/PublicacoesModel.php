@@ -282,29 +282,30 @@ class PublicacoesModel extends ModelCRUD
             header('Location: ' . APPDIR . 'publicacoes/visualizar/');
         }
     }
+
     
     /**
      * Método responsável por filtro de carousel do sistema
      */
     public function filtroCarousel(){
-        $query = "SELECT publicacoes.id, publicacoes.titulo FROM `rankings` "
-                . "INNER JOIN publicacoes ON publicacoes_id=publicacoes.id "
-                . "WHERE timestamp BETWEEN ? AND ? LIMIT 3";
-        $stmt = $this->pdo->prepare($query);
-        $Inicio = strtotime('today');
-        $Fim = strtotime('+1 month');
-        $stmt->execute([$Inicio, $Fim]);
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $this->db->instruction(new \HTR\Database\Instruction\Select('rankings'))
+            ->join('publicacoes', 'id = rankings.publicacoes_id')
+            ->setFields(['publicacoes.id', 'publicacoes.titulo'])
+            ->setFilters()
+            ->where("timestamp", 'BETWEEN', strtotime('today'))
+            ->whereOperator("AND")
+            ->where("", "" , strtotime('+1 month'));
+        return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
     
     /**
      * Método responsável por colocar as publicações na home do sistema com LIMIT 30
      */
     public function publicacoesLimit(){
-        $query = "SELECT * FROM {$this->entidade} LIMIT 20";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
+            ->setFilters()
+            ->limit("20");
+        return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
     
     
@@ -312,10 +313,10 @@ class PublicacoesModel extends ModelCRUD
      * Método responsável por filtro de categorias do sistema
      */
     public function filtroCategoria($id){
-        $query = "SELECT * FROM {$this->entidade} WHERE categorias_id = ? ";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute([$id]);
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
+            ->setFilters()
+            ->where("categorias_id", '=', $id);
+        return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -424,5 +425,26 @@ class PublicacoesModel extends ModelCRUD
     {
         $this->id = $value ? : time();
         return $this;
+    }
+
+    public function loadPublicacao($publicacao)
+    {
+        // caso a publicação seja um link externo, redireciona para este link
+        if ($publicacao['link']) {
+            header("location: " . $publicacao['link']);
+            return true;
+        }
+
+        // verifica se o arquivo pdf existe
+        $filename = APPDIR . 'files_uploads/' . $publicacao['id'] . '.pdf';
+        if (!file_exists($filename)) {
+            return false;
+        }
+
+        $file = file_get_contents($filename);
+        header('Content-Type: application/pdf');
+        echo $file;
+
+        return true;
     }
 }
