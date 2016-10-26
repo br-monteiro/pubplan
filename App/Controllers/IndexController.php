@@ -7,6 +7,7 @@ namespace App\Controllers;
 
 use HTR\System\ControllerAbstract as Controller;
 use HTR\Interfaces\ControllerInterface as CtrlInterface;
+use HTR\Helpers\Access\Access;
 use App\Models\CategoriasModel as Categoria;
 use App\Models\PublicacoesModel as Publicacoes;
 
@@ -20,6 +21,7 @@ class IndexController extends Controller implements CtrlInterface
     {
         $this->view['controller'] =  APPDIR . 'index/';
         parent::__construct();
+        $this->access = new Access();
     }
 
     /*
