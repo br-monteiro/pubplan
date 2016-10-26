@@ -26,7 +26,7 @@
                         <img class="{{$firstSlide}}" src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                         <div class="container">
                             <div class="carousel-caption">
-                                <p><a class="btn btn-lg btn-primary" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver mais</a></p>
+                                <p><a class="btn btn-lg btn-primary" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}/titulo/{{$value['titulo']}}" role="button">Ver mais</a></p>
                             </div>
                         </div>
                     </div>
@@ -67,12 +67,12 @@
                 ?>
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}">
+                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}/titulo/{{$value['titulo']}}">
                             <img src="images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                         </a>
                     </div>
                     <div class="caption">
-                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}">
+                        <a href="{{APPDIR}}index/detalhes/id/{{$value['id']}}/titulo/{{$value['titulo']}}">
                             <h4>{{$value['titulo']}}</h4>
                         </a>
                     </div>
