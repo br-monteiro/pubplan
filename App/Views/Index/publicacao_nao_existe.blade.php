@@ -23,7 +23,7 @@
                             <a href="{{APPDIR}}" class="btn btn-primary">
                                 <i class="fa fa-mail-reply"></i> Retornar
                             </a>
-                            <a href="{{APPDIR}}publicacoes/ler/id/{{$resultPublicacao['id']}}/titulo/{{$resultPublicacao['titulo']}}" class="btn btn-warning">
+                            <a href="{{$resultPublicacao['link'] or APPDIR . 'files_uploads/' . $resultPublicacao['id'] . '.pdf'}}" class="btn btn-warning">
                                 <i class="fa fa-book"></i> Ler Publicação
                             </a>
                         </div>
