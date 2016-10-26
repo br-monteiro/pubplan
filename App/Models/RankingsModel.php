@@ -38,7 +38,7 @@ class RankingsModel extends ModelCRUD
         $publicacao = $publicacoesModel->findById($publicacaoId);
         // verifica se publicação é válida
         // caso false retorna false
-        if ($publicacao) {
+        if (!isset($publicacao['id'])) {
             return false;
         }
 
