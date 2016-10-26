@@ -29,7 +29,8 @@ class IndexController extends Controller implements CtrlInterface
     public function indexAction()
     {
         $publicacoes = new Publicacoes();
-        $this->view['resultPublicacoes'] = $publicacoes->returnAll();
+        $this->view['resultPublicacoes'] = $publicacoes->publicacoesLimit();
+        $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
         $categorias = new Categoria();
         $this->view['resultCategorias'] = $categorias->returnAll();
         // Renderiza a view index.phtml com o layout blank
@@ -48,7 +49,7 @@ class IndexController extends Controller implements CtrlInterface
     
     public function filtroCategoriaAction(){
         $publicacoes = new Publicacoes();
-        $this->view['resultPublicacoes'] = $publicacoes->filtroCategoria($this->getParam('id'));
+        $this->view['PublicacoesPorCategoria'] = $publicacoes->filtroCategoria($this->getParam('id'));
         $categorias = new Categoria();
         $this->view['resultCategorias'] = $categorias->returnAll();
         

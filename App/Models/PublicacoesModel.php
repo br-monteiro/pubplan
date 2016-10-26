@@ -283,8 +283,37 @@ class PublicacoesModel extends ModelCRUD
         }
     }
 
+    
+    /**
+     * Método responsável por filtro de carousel do sistema
+     */
+    public function filtroCarousel(){
+        $query = "SELECT publicacoes.id, publicacoes.titulo FROM `rankings` "
+                . "INNER JOIN publicacoes ON publicacoes_id=publicacoes.id "
+                . "WHERE timestamp BETWEEN ? AND ? LIMIT 3";
+        $stmt = $this->pdo->prepare($query);
+        $Inicio = strtotime('today');
+        $Fim = strtotime('+1 month');
+        $stmt->execute([$Inicio, $Fim]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    /**
+     * Método responsável por colocar as publicações na home do sistema com LIMIT 30
+     */
+    public function publicacoesLimit(){
+        $query = "SELECT * FROM {$this->entidade} LIMIT 20";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    
+    /**
+     * Método responsável por filtro de categorias do sistema
+     */
     public function filtroCategoria($id){
-        $query = "SELECT * FROM publicacoes WHERE categorias_id = ? ";
+        $query = "SELECT * FROM {$this->entidade} WHERE categorias_id = ? ";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$id]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
