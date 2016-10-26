@@ -436,7 +436,7 @@ class PublicacoesModel extends ModelCRUD
         }
 
         // verifica se o arquivo pdf existe
-        $filename = APPDIR . 'files_uploads/' . $publicacao['id'] . '.pdf';
+        $filename = 'files_uploads/' . $publicacao['id'] . '.pdf';
         if (!file_exists($filename)) {
             return false;
         }
