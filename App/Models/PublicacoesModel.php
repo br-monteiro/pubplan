@@ -284,7 +284,10 @@ class PublicacoesModel extends ModelCRUD
     }
     
     public function filtroCategoria($id){
-        
+        $query = "SELECT * FROM publicacoes WHERE categorias_id = ? ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

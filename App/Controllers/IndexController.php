@@ -46,8 +46,12 @@ class IndexController extends Controller implements CtrlInterface
         $this->render('Index.detalhes');
     }
     
-    public function filtroCategoria(){
+    public function filtroCategoriaAction(){
         $publicacoes = new Publicacoes();
-        $this->view['resultFiltroCategoria'] = $publicacoes->findById($this->getParam('id'));
+        $this->view['resultPublicacoes'] = $publicacoes->filtroCategoria($this->getParam('id'));
+        $categorias = new Categoria();
+        $this->view['resultCategorias'] = $categorias->returnAll();
+        
+        $this->render('Index.index');
     }
 }
