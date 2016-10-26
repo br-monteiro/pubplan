@@ -11,6 +11,7 @@ use HTR\System\ControllerAbstract as Controller;
 use HTR\Interfaces\ControllerInterface;
 use HTR\Helpers\Access\Access;
 use App\Models\PublicacoesModel;
+use App\Models\RankingsModel;
 
 class PublicacoesController extends Controller implements ControllerInterface
 {
@@ -133,5 +134,13 @@ class PublicacoesController extends Controller implements ControllerInterface
         // Instanciando o Model padrão usado.
         $model = new $this->modelDefault($this->access->pdo);
         $model->editar();
+    }
+
+    public function lerAction()
+    {
+        $rankingModel = new RankingsModel($this->access->pdo);
+        if (!$rankingModel->novo($this->getParam('id'))) {
+            $this->render('');
+        }
     }
 }

@@ -282,7 +282,7 @@ class PublicacoesModel extends ModelCRUD
             header('Location: ' . APPDIR . 'publicacoes/visualizar/');
         }
     }
-    
+
     public function filtroCategoria($id){
         $query = "SELECT * FROM publicacoes WHERE categorias_id = ? ";
         $stmt = $this->pdo->prepare($query);
@@ -409,5 +409,26 @@ class PublicacoesModel extends ModelCRUD
     {
         $this->id = $value ? : time();
         return $this;
+    }
+
+    public function loadPublicacao($publicacao)
+    {
+        // caso a publicação seja um link externo, redireciona para este link
+        if ($publicacao['link']) {
+            header("location: " . $publicacao['link']);
+            return true;
+        }
+
+        // verifica se o arquivo pdf existe
+        $filename = APPDIR . 'files_uploads/' . $publicacao['id'] . '.pdf';
+        if (!file_exists($filename)) {
+            return false;
+        }
+
+        $file = file_get_contents($filename);
+        header('Content-Type: application/pdf');
+        echo $file;
+
+        return true;
     }
 }

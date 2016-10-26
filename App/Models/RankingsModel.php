@@ -8,9 +8,12 @@
 namespace App\Models;
 
 use HTR\System\ModelCRUD;
+use HTR\Helpers\Mensagem\Mensagem as msg;
+use App\Models\PublicacoesModel;
 
 class RankingsModel extends ModelCRUD
 {
+
     /**
      * Entidade padrão do Model
      */
@@ -30,11 +33,23 @@ class RankingsModel extends ModelCRUD
     public function novo($publicacaoId)
     {
 
-       $dados = [
-          'publicacoes_id' => $publicacaoId,
-          'timestamp' => time(),
+        $publicacoesModel = new PublicacoesModel($this->pdo);
+        // consulta pelo ID da publicação
+        $publicacao = $publicacoesModel->findById($publicacaoId);
+        // verifica se publicação é válida
+        // caso false retorna false
+        if ($publicacao) {
+            return false;
+        }
+
+        $dados = [
+            'publicacoes_id' => $publicacaoId,
+            'timestamp' => time(),
         ];
 
+        // insere um novo registro no ranking
         $this->insert($dados);
+
+        return $publicacoesModel->loadPublicacao($publicacao);
     }
 }
