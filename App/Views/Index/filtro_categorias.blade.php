@@ -12,7 +12,7 @@
 
         <div class="col-xs-12 col-sm-9">
             <div class="row">
-                @forelse ($PublicacoesPorCategoria as $value)
+                @forelse ($resultPublicacoes as $value)
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img src="{{APPDIR}}images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
@@ -35,6 +35,25 @@
         @include('layout.Partials.lista_categorias')
     </div><!--/row-->
 
+    @if (isset($btn['link'][1]))
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a href="{{$controller}}{{$action}}/{{$findBy}}/pagina/{{$btn['previus']}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @foreach ($btn['link'] as $value)
+            <li><a href="{{$controller}}{{$action}}/{{$findBy}}/pagina/{{$value}}">{{$value}}</a></li>
+            @endforeach
+            <li>
+                <a href="{{$controller}}{{$action}}/{{$findBy}}/pagina/{{$btn['next']}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    @endif
     <hr>
 
     <footer>
