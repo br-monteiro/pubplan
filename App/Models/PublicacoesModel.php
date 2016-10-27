@@ -282,6 +282,26 @@ class PublicacoesModel extends ModelCRUD
             header('Location: ' . APPDIR . 'publicacoes/visualizar/');
         }
     }
+    
+    public function paginatorFiltro($pagina, $valor) {
+        // Preparando as diretrizes da consulta		  
+        $dados = [
+            'pdo' => $this->pdo,
+            'select' => 'publicacoes.id, titulo',
+            'entidade' => '`publicacoes`',
+            'where' => "publicacoes.titulo LIKE ? OR publicacoes.palavras_chave LIKE ? ",
+            'bindValue' => ["%{$valor}%", "%{$valor}%"],
+            'pagina' => $pagina,
+            'maxResult' => 20
+        ];
+        
+        // Instacia o Helper que auxilia na paginação de páginas
+        $paginator = new Paginator($dados);
+        // Resultado da consulta
+        $this->resultadoPaginator = $paginator->getResultado();
+        // Links para criação do menu de navegação da paginação @return array
+        $this->navPaginator = $paginator->getNaveBtn();
+    }
 
     
     /**
