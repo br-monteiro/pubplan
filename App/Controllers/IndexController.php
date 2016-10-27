@@ -13,7 +13,6 @@ use App\Models\PublicacoesModel as Publicacoes;
 
 class IndexController extends Controller implements CtrlInterface
 {
-
     /*
      * Inicia os atributos usados na View
      */
@@ -21,6 +20,7 @@ class IndexController extends Controller implements CtrlInterface
     {
         $this->view['controller'] =  APPDIR . 'index/';
         parent::__construct();
+        
         $this->access = new Access();
     }
 
@@ -31,10 +31,10 @@ class IndexController extends Controller implements CtrlInterface
     public function indexAction()
     {
         $publicacoes = new Publicacoes($this->access->pdo);
-        $this->view['resultPublicacoes'] = $publicacoes->publicacoesLimit();
         $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
         $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
+        $this->view['numPag'] = $this->getParam('pagina');
         // Renderiza a view index.phtml com o layout blank
         $this->render('Index.index');
     }
@@ -57,5 +57,16 @@ class IndexController extends Controller implements CtrlInterface
         $this->view['resultCategorias'] = $categorias->returnAll();
         
         $this->render('Index.filtro_categorias');
+    }
+    
+    public function buscaAction()
+    {
+        $publicacoes = new Publicacoes($this->access->pdo);
+        
+        $publicacoes->paginatorFiltro($this->getParam('pagina'), $this->getParam('por'));
+        $this->view['resultPublicacoes'] = $publicacoes->getResultadoPaginator();
+        $this->view['btn'] = $publicacoes->getNavePaginator();
+
+        $this->render('index.lista_resultados');
     }
 }
