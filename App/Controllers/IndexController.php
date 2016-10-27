@@ -38,23 +38,28 @@ class IndexController extends Controller implements CtrlInterface
         // Renderiza a view index.phtml com o layout blank
         $this->render('Index.index');
     }
-    
-    public function DetalhesAction()
+
+    public function detalhesAction()
     {
         $publicacoes = new Publicacoes($this->access->pdo);
-        $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
         $categorias = new Categoria($this->access->pdo);
+
+        $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
+        $tags = isset($this->view['resultPublicacao']['palavras_chave']) ? $this->view['resultPublicacao']['palavras_chave'] : [];
+        $this->view['resultTagsPublicacao'] = explode(', ', $tags);
+
         $this->view['resultCategorias'] = $categorias->returnAll();
+
         // Renderiza a view detalhes.phtml com o layout blank
         $this->render('Index.detalhes');
     }
-    
+
     public function filtroCategoriaAction(){
         $publicacoes = new Publicacoes($this->access->pdo);
         $this->view['PublicacoesPorCategoria'] = $publicacoes->filtroCategoria($this->getParam('id'));
         $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
-        
+
         $this->render('Index.filtro_categorias');
     }
 }
