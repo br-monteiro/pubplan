@@ -141,10 +141,21 @@ class PublicacoesController extends Controller implements ControllerInterface
     {
         $rankingModel = new RankingsModel($this->access->pdo);
         if (!$rankingModel->novo($this->getParam('id'))) {
-            
+
             $categorias = new CategoriasModel($this->access->pdo);
             $this->view['resultCategorias'] = $categorias->returnAll();
             $this->render('Index.publicacao_nao_existe');
         }
+    }
+    
+    public function tagsAction()
+    {
+        $tag = $this->getParam('busca');
+        $publicacoesModel = new $this->modelDefault($this->access->pdo);
+        $this->view['PublicacoesPorCategoria'] = $publicacoesModel->searchByPalavras_chave($tag);
+        $categorias = new CategoriasModel($this->access->pdo);
+        $this->view['resultCategorias'] = $categorias->returnAll();
+        
+        $this->render('Index.filtro_categorias');
     }
 }
