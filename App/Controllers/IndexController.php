@@ -52,7 +52,6 @@ class IndexController extends Controller implements CtrlInterface
     public function filtroCategoriaAction(){
         $publicacoes = new Publicacoes($this->access->pdo);
         $this->view['PublicacoesPorCategoria'] = $publicacoes->filtroCategoria($this->getParam('id'));
-        $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
         $categorias = new Categoria($this->access->pdo);
         $this->view['resultCategorias'] = $categorias->returnAll();
         
