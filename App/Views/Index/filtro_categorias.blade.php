@@ -4,7 +4,7 @@
 
 @section('content')
 
-@include('Index.menu')
+@include('layout.Partials.menu')
 
 <div class="container">
 
@@ -64,7 +64,7 @@
             </div>
 
         </div><!--/.col-xs-12.col-sm-9-->
-        @include('Index.lista_categorias')
+        @include('layout.Partials.lista_categorias')
     </div><!--/row-->
 
     <hr>
