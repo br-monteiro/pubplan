@@ -12,7 +12,7 @@
 
         <div class="col-xs-12 col-sm-9">
             <div class="row">
-                @foreach ($PublicacoesPorCategoria as $value)
+                @forelse ($PublicacoesPorCategoria as $value)
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img src="{{APPDIR}}images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
@@ -22,7 +22,13 @@
                         <p><a class="btn btn-success" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-sm-12 col-md-12">
+                    <div class="alert alert-info">
+                        <i class="fa fa-meh-o"></i> Nenhuma publicação localizada...
+                    </div>
+                </div>
+                @endforelse
             </div>
 
         </div><!--/.col-xs-12.col-sm-9-->
