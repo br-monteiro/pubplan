@@ -283,7 +283,7 @@ class PublicacoesModel extends ModelCRUD
         }
     }
 
-    
+
     /**
      * Método responsável por filtro de carousel do sistema
      */
@@ -298,7 +298,7 @@ class PublicacoesModel extends ModelCRUD
             ->groupBy('publicacoes.titulo');
         return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Método responsável por colocar as publicações na home do sistema com LIMIT 30
      */
@@ -308,16 +308,33 @@ class PublicacoesModel extends ModelCRUD
             ->limit("20");
         return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
-    
+
+
     /**
      * Método responsável por filtro de categorias do sistema
+     *
+     * @param int $pagina
+     * @param int $find
+     * @return array
      */
-    public function filtroCategoria($id){
-        $this->db->instruction(new \HTR\Database\Instruction\Select($this->entidade))
-            ->setFilters()
-            ->where("categorias_id", '=', $id);
-        return $this->db->execute()->fetchAll(\PDO::FETCH_ASSOC);
+    public function filterByCategoria($pagina, $find)
+    {
+        /**
+         * Preparando as diretrizes da consulta
+         */
+        $dados = [
+            'pdo' => $this->pdo,
+            'entidade' => '`publicacoes`',
+            'where' => 'categorias_id = ?',
+            'bindValue' => [$find ],
+            'pagina' => $pagina,
+            'maxResult' => 20
+        ];
+
+        // Instacia o Helper que auxilia na paginação de páginas
+        $paginator = new Paginator($dados);
+
+        return [$paginator->getResultado(), $paginator->getNaveBtn()];
     }
 
     /**
@@ -432,5 +449,31 @@ class PublicacoesModel extends ModelCRUD
         echo $file;
 
         return true;
+    }
+
+    /**
+     * Filta os resultado por palavras chave
+     * @param int $pagina
+     * @param string $tag
+     * @return array
+     */
+    public function fiterByPalavrasChave($pagina, $tag)
+    {
+        /**
+         * Preparando as diretrizes da consulta
+         */
+        $dados = [
+            'pdo' => $this->pdo,
+            'entidade' => '`publicacoes`',
+            'where' => 'palavras_chave LIKE ?',
+            'bindValue' => ['%' . $tag . '%'],
+            'pagina' => $pagina,
+            'maxResult' => 20
+        ];
+
+        // Instacia o Helper que auxilia na paginação de páginas
+        $paginator = new Paginator($dados);
+
+        return [$paginator->getResultado(), $paginator->getNaveBtn()];
     }
 }
