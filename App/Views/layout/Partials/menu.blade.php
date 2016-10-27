@@ -12,6 +12,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{APPDIR}}publicacoes/"><i class="fa fa-lock"></i> Login</a></li>
             </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" id="search" class="form-control" onkeypress="busca()" placeholder="Pesquisa...">
+            </form>
         </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
 </nav><!-- /.navbar -->
+
+@section('scripts')  
+   $('.lista-resultado').load('{{APPDIR}}index/busca/pagina/<?= $numPag ? : 1;?>');
+   
+$('#search').on('keypress', function() {
+   $('.lista-resultado').load('{{APPDIR}}index/busca/por/' + $('#search').val());
+});
+
+@endsection
