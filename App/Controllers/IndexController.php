@@ -83,6 +83,6 @@ class IndexController extends Controller implements CtrlInterface
         $this->view['resultPublicacoes'] = $publicacoes->getResultadoPaginator();
         $this->view['btn'] = $publicacoes->getNavePaginator();
 
-        $this->render('index.lista_resultados');
+        $this->render('Index.lista_resultados');
     }
 }
