@@ -18,7 +18,7 @@
                         <img src="{{APPDIR}}images/uploads/{{$value['id']}}.jpg" alt="{{$value['titulo']}}" width="100" height="100">
                     </div>
                     <div class="caption">
-                        <h3>{{$value['titulo']}}</h3>
+                        <h4>{{$value['titulo']}}</h4>
                         <p><a class="btn btn-success" href="{{APPDIR}}index/detalhes/id/{{$value['id']}}" role="button">Ver Detalhes &raquo;</a></p>
                     </div>
                 </div>
