@@ -38,24 +38,40 @@ class IndexController extends Controller implements CtrlInterface
         // Renderiza a view index.phtml com o layout blank
         $this->render('Index.index');
     }
-    
-    public function DetalhesAction()
+
+    public function detalhesAction()
     {
         $publicacoes = new Publicacoes($this->access->pdo);
-        $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
         $categorias = new Categoria($this->access->pdo);
+
+        $this->view['resultPublicacao'] = $publicacoes->findById($this->getParam('id'));
+        $tags = isset($this->view['resultPublicacao']['palavras_chave']) ? $this->view['resultPublicacao']['palavras_chave'] : [];
+        $this->view['resultTagsPublicacao'] = explode(', ', $tags);
+
         $this->view['resultCategorias'] = $categorias->returnAll();
+
         // Renderiza a view detalhes.phtml com o layout blank
         $this->render('Index.detalhes');
     }
-    
+
     public function filtroCategoriaAction(){
-        $publicacoes = new Publicacoes($this->access->pdo);
-        $this->view['PublicacoesPorCategoria'] = $publicacoes->filtroCategoria($this->getParam('id'));
-        $this->view['resultCarousel'] = $publicacoes->filtroCarousel();
+        $publicacoesModel = new Publicacoes($this->access->pdo);
         $categorias = new Categoria($this->access->pdo);
+
+        $find = $this->getParam('id');
+
+        $result = $publicacoesModel->filterByCategoria($this->getParam('pagina'), $find);
+
+        $this->view['action'] = 'filtrocategoria';
+
         $this->view['resultCategorias'] = $categorias->returnAll();
-        
+
+        $this->view['resultPublicacoes'] = $result[0];
+
+        $this->view['btn'] = $result[1];
+
+        $this->view['findBy'] = 'id/' . $find;
+
         $this->render('Index.filtro_categorias');
     }
     

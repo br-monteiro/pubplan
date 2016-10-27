@@ -115,7 +115,7 @@ class PublicacoesController extends Controller implements ControllerInterface
 
         $this->render('publicacoes.index');
     }
-    
+
 
     /**
      * Action responsável controlar a inserção de registros
@@ -141,10 +141,32 @@ class PublicacoesController extends Controller implements ControllerInterface
     {
         $rankingModel = new RankingsModel($this->access->pdo);
         if (!$rankingModel->novo($this->getParam('id'))) {
-            
+
             $categorias = new CategoriasModel($this->access->pdo);
             $this->view['resultCategorias'] = $categorias->returnAll();
             $this->render('Index.publicacao_nao_existe');
         }
+    }
+
+    public function tagsAction()
+    {
+        $publicacoesModel = new $this->modelDefault($this->access->pdo);
+        $categorias = new CategoriasModel($this->access->pdo);
+
+        $find = $this->getParam('busca');
+
+        $result = $publicacoesModel->fiterByPalavrasChave($this->getParam('pagina'), $find);
+
+        $this->view['action'] = 'tags';
+
+        $this->view['resultCategorias'] = $categorias->returnAll();
+
+        $this->view['resultPublicacoes'] = $result[0];
+
+        $this->view['btn'] = $result[1];
+
+        $this->view['findBy'] = 'busca/' . $find;
+
+        $this->render('Index.filtro_categorias');
     }
 }
