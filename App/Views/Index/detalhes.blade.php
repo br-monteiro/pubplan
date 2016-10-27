@@ -41,7 +41,13 @@
                     <label>Quantidade de Páginas</label>
                     <p style="text-justify">{{$resultPublicacao['numero_pagias']}}</p>
                     <label>Palavras-Chaves</label>
-                    <p style="text-justify">{{$resultPublicacao['palavras_chave']}}</p>
+                    <p style="text-justify">
+                        @forelse ($resultTagsPublicacao as $tag)
+                            <a href="{{APPDIR}}publicacoes/tags/busca/{{$tag}}">{{$tag}}</a>,
+                        @empty
+                            <i class="fa fa-meh-o"></i> sem palavras chave
+                        @endforelse
+                    </p>
                 </div>
             </div>
             <label>Sinopse</label>
